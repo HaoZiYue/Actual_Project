@@ -35,6 +35,7 @@
 
 <style scoped lang="stylus">
 #FooterGuideContainer
+  background #fff
   width 100%
   height 98px
   position absolute

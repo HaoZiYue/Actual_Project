@@ -8,9 +8,20 @@ const postcss = px2rem({
   return path.join(__dirname, dir)
 }
  module.exports = {
+  runtimeCompiler: true,
   lintOnSave:false,
   devServer:{
-    open:true
+    open:true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        // ws: true,
+        // changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   },
   configureWebpack:{//与webpack相关的配置写在这里
     resolve:{//解析
