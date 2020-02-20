@@ -38,7 +38,7 @@
   background #fff
   width 100%
   height 98px
-  position absolute
+  position fixed
   bottom 0
   left 0
   display flex

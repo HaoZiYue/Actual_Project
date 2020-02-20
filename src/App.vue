@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="appContainer">
     <router-view></router-view>
     <FooterGuide v-show="$route.path !== '/search'"></FooterGuide>
   </div>
@@ -14,6 +14,5 @@ import FooterGuide from './components/FooterGuide/FooterGuide'
 </script>
 
 <style scoped lang="stylus">
-
  
 </style>

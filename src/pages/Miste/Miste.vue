@@ -12,21 +12,7 @@
       <div class="leftNav">
           <ul class="content">
             <li class="active">推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐哈哈哈哈</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
-            <li>推荐</li>
+            <li @click="getIndex" v-for="(item, index) in scrollNav" :key="index">{{item.name}}</li>
           </ul>
       </div>
       <div class="showAll">
@@ -39,11 +25,9 @@
 
 <script type="text/ecmascript-6">
 import BScroll from 'better-scroll';
-import Recommend from '../../components/Recommend/Recommend'
+import Recommend from '../../components/Recommend/Recommend';
+import {mapState} from 'vuex'
   export default {
-    mounted(){
-      this.$store.dispatch('getScrollNavList');
-    },
     components:{
       Recommend
     },
@@ -51,19 +35,34 @@ import Recommend from '../../components/Recommend/Recommend'
       this.$nextTick(() => {
         this.scroll = new BScroll('.leftNav', {
           scrollX: true,
+          click:true
         })
-      })
+      });
+      //发送请求拿滚动导航的数据
+      this.$store.dispatch('getScrollNavList');
+      //发送请求获取首页的信息
+      this.$store.dispatch('getIndexData')
+    },
+    computed:{
+        ...mapState({
+          scrollNav:state=>state.scrollNav
+        })
+    },
+    methods:{
+      getIndex(event){
+        console.log(event)
+      }
     }
+    
   }
 </script>
 
 <style scoped lang="stylus">
   #miateContainer
-    background #fff
     width 100%
     box-sizing border-box
     .misteHeader
-      // width 100%
+      background #fff
       height 88px
       display flex
       justify-content space-between
@@ -101,20 +100,19 @@ import Recommend from '../../components/Recommend/Recommend'
         color #DD1A21
     .misteNav
       height 60px
-      width 100%
+      // width 100%
       background #fff
       padding-left 30px
       position relative
 
       .leftNav
         height 60px
-        width 75%
+        width 80%
         overflow hidden
         display flex
         .content
           display flex
           height 60px
-          font-size 28px
           li
             height 100%
             line-height 60px
@@ -122,6 +120,10 @@ import Recommend from '../../components/Recommend/Recommend'
             padding  0 16px
             text-align center
             box-sizing border-box
+            margin-right 14px
+            color #333
+            font-size 28px
+
             &.active
               color #dd1a21
               border-bottom 4px solid #dd1a21
@@ -129,7 +131,7 @@ import Recommend from '../../components/Recommend/Recommend'
         width 100px
         height 60px
         position absolute
-        right 25px
+        right 20px
         top 0px
         line-height 60px
         span 

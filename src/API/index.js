@@ -7,3 +7,6 @@ export const getSearchItem = ()=>ajax({
 export const getScrollNav = ()=>ajax({
   url:'/getnav'
 })
+export const getIndexDataList = ()=>ajax({
+  url:'/getindexdata'
+})

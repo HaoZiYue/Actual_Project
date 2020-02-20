@@ -89,6 +89,7 @@ import {mapState} from 'vuex'
         height 48px
         max-width 250px
         white-space nowrap
+        text-overflow ellipsis
         overflow hidden
         box-sizing border-box
         border 1px solid #999
