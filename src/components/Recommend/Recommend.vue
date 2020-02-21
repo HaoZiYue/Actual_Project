@@ -34,9 +34,14 @@
           <div class="promotionTop">
             <img class="img" :src="indexData.bigPromotionModule.floorList[0].cells[0].picUrl" alt="">
             <div class="products">
-              <img src="https://yanxuan-item.nosdn.127.net/d361f2992d6c688b7480ef2397ecf3fe.png?imageView&thumbnail=168x0&quality=75" alt="">
-              <div class="price">
-                <span>￥19.9</span>
+               <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="(item, index) in indexData.bigPromotionModule.floorList[0].cells[0].itemList" :key="index">
+                  <img :src="item.picUrl" alt="">
+                  <div class="price">
+                    <span classs="re-price">￥{{item.retailPrice}}</span>
+                    <!-- <del class="sub-price" v-show="item.counterPrice">￥{{item.counterPrice}}</del> -->
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -116,11 +121,11 @@
           <div class="title-left">
             <span>限时购</span>
             <div class="dateNow">
-              <div class="date">00</div>
+              <div class="date">{{hou}}</div>
               <span>:</span>
-              <div class="date">00</div>
+              <div class="date">{{min}}</div>
               <span>:</span>
-              <div class="date">00</div>
+              <div class="date">{{sec}}</div>
             </div>
           </div>
           <div class="title-right">
@@ -211,13 +216,13 @@ import {mapState} from 'vuex'
   export default {
     data(){
       return {
-        // hotSellListFirst:[],
-        // remainingHotSellList:[]
+        hou:0,
+        min:0,
+        sec:0,
       }
     },
     mounted(){
-      console.log(this.hotSellListFirst)
-      console.log(this.remainingHotSellList)
+        this.time();
     },
     computed:{
         ...mapState({
@@ -253,8 +258,45 @@ import {mapState} from 'vuex'
                 el: '.swiper-pagination'
               },
             })
+            new Swiper('.products',{
+              autoplay:true,
+              loop:true,
+              speed:100,
+              effect : 'fade',
+              fadeEffect: {
+                crossFade: true,
+              }
+            })
         })
       }
+    },
+    methods:{
+         time(){
+           if(this.indexData.flashSaleModule){
+            let date = this.indexData.flashSaleModule.remainTime;
+            let interval = setInterval(()=>{
+              
+                // let date = this.indexData.flashSaleModule.remainTime;
+                //new Date当前的时间戳，也可以换成自定义的时间戳
+                if (date > 0) {
+                    let time = date / 1000;
+                    // 获取时、分、秒,毫秒
+                    this.hou = parseInt((time % (60 * 60 * 24)) / 3600)<10?('0'+parseInt((time % (60 * 60 * 24)) / 3600)):parseInt((time % (60 * 60 * 24)) / 3600)
+                    this.min = parseInt(((time % (60 * 60 * 24)) % 3600) / 60)<10?('0'+parseInt(((time % (60 * 60 * 24)) % 3600) / 60)):parseInt(((time % (60 * 60 * 24)) % 3600) / 60);
+                    this.sec = parseInt(((time % (60 * 60 * 24)) % 3600) % 60)<10?('0'+parseInt(((time % (60 * 60 * 24)) % 3600) % 60)):parseInt(((time % (60 * 60 * 24)) % 3600) % 60);
+                  } else {
+                    //活动已结束，全部设置为'00'
+                    // console.log("aaa")
+                      this.hou="00",
+                      this.min="00",
+                      this.sec="00"
+                  }
+              
+              date -= 1000
+            
+          },1000)
+        }
+         }
     }
 
   }
@@ -349,22 +391,36 @@ import {mapState} from 'vuex'
         position absolute
         left 74px
         top 32px
-        img 
+        overflow hidden
+        .swiper-wrapper
           width 100%
           height 100%
-        .price
-          width 152px
-          height 32px
-          background #f48f18
-          position absolute
-          left 8px
-          bottom 8px
-          border-radius 16px
-          text-align center
-          line-height 32px
-          font-size 20px
-          color #fff
-          font-weight bold 
+          .swiper-slide
+            width 100%
+            height 100%
+            position relative
+            img 
+              width 100%
+              height 100%
+            .price
+              width 152px
+              height 32px
+              background #f48f18
+              position absolute
+              left 8px
+              bottom 8px
+              border-radius 16px
+              text-align center
+              line-height 32px
+              z-index 10
+              span
+                color #fff
+                font-size 24px
+              del
+                font-size 24px
+                color #fff
+                -webkit-transform-origin-x 0
+                -webkit-transform scale(0.5) 
     .promotionBottom
       // width 100%
       height 588px
