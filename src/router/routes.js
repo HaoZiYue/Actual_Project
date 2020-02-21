@@ -4,11 +4,22 @@ import Personal from '../pages/Personal/Personal.vue';
 import ShoppingCar from '../pages/ShoppingCar/ShoppingCar.vue';
 import Worthy from '../pages/Worthy/Worthy.vue';
 import Search from '../pages/Search/Search.vue'
-
+import Recommend from '../components/Recommend/Recommend.vue'
 export default [
   {
     path:'/miste',
-    component: Miste
+    component: Miste,
+    children:[
+      {
+        path:'recommend',
+        component:Recommend
+      },
+      {
+        path:'/miste',
+        redirect:'/miste/recommend'
+
+      }
+    ]
   },
   {
     path:'/category',

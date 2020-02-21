@@ -1,5 +1,6 @@
 <template>
   <div id="miateContainer">
+    <!-- 头部logo和搜索 -->
     <div class="misteHeader">
       <div class="logo" @click="$router.go('/miste')"></div>
       <div class="inputContainer" @click="$router.push('/search')">
@@ -8,18 +9,19 @@
       </div>
       <div class="login">登录</div>
     </div>
+    <!-- 滚动导航 -->
     <div class="misteNav">
       <div class="leftNav">
-          <ul class="content">
-            <li class="active">推荐</li>
-            <li @click="getIndex" v-for="(item, index) in scrollNav" :key="index">{{item.name}}</li>
-          </ul>
+          <div class="content">
+            <router-link to="/miste/recommend" class="active recommend">推荐</router-link>
+            <div class="recommend" @click="getIndex" v-for="(item, index) in scrollNav" :key="index">{{item.name}}</div>
+          </div>
       </div>
       <div class="showAll">
         <span class="iconfont iconarrow-down"></span>
       </div>
     </div>
-    <Recommend></Recommend>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -32,12 +34,7 @@ import {mapState} from 'vuex'
       Recommend
     },
     mounted(){
-      this.$nextTick(() => {
-        this.scroll = new BScroll('.leftNav', {
-          scrollX: true,
-          click:true
-        })
-      });
+      
       //发送请求拿滚动导航的数据
       this.$store.dispatch('getScrollNavList');
       //发送请求获取首页的信息
@@ -52,6 +49,17 @@ import {mapState} from 'vuex'
       getIndex(event){
         console.log(event)
       }
+    },
+    watch:{
+      //等到数据来了再去new betterscroll
+      scrollNav(){
+          this.$nextTick(() => {
+            this.scroll = new BScroll('.leftNav', {
+              scrollX: true,
+              click:true
+            })
+          });
+        }
     }
     
   }
@@ -61,13 +69,20 @@ import {mapState} from 'vuex'
   #miateContainer
     width 100%
     box-sizing border-box
+    position absolute
     .misteHeader
       background #fff
       height 88px
+      width 100%
+      z-index 10
       display flex
+      box-sizing border-box
       justify-content space-between
       align-items center
       padding 16px 30px
+      position fixed
+      top 0
+      left 0
       .logo
         width 138px
         height 40px
@@ -100,11 +115,13 @@ import {mapState} from 'vuex'
         color #DD1A21
     .misteNav
       height 60px
-      // width 100%
+      width 100%
+      position fixed
+      top 88px
+      left 0
       background #fff
       padding-left 30px
-      position relative
-
+      z-index 10
       .leftNav
         height 60px
         width 80%
@@ -113,7 +130,7 @@ import {mapState} from 'vuex'
         .content
           display flex
           height 60px
-          li
+          .recommend
             height 100%
             line-height 60px
             white-space nowrap
