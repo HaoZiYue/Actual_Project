@@ -5,6 +5,7 @@ import ShoppingCar from '../pages/ShoppingCar/ShoppingCar.vue';
 import Worthy from '../pages/Worthy/Worthy.vue';
 import Search from '../pages/Search/Search.vue'
 import Recommend from '../components/Recommend/Recommend.vue'
+import CateListData from '../pages/CateListData/CateListData.vue'
 export default [
   {
     path:'/miste',
@@ -17,13 +18,22 @@ export default [
       {
         path:'/miste',
         redirect:'/miste/recommend'
-
       }
     ]
   },
   {
     path:'/category',
-    component: Category
+    component: Category,
+    children:[
+      {
+        path:'cateList',
+        component: CateListData,
+      },
+      // {
+      //   path:'/category/cateList',
+      //   redirect:''
+      // }
+    ]
   },
   {
     path:'/personal',

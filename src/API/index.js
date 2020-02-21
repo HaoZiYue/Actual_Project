@@ -10,3 +10,6 @@ export const getScrollNav = ()=>ajax({
 export const getIndexDataList = ()=>ajax({
   url:'/getindexdata'
 })
+export const getCateListData = ()=>ajax({
+  url:'/getcateNavListData'
+})

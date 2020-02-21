@@ -1,5 +1,6 @@
 export default {
   searchList:'',
   scrollNav:'',
-  indexData:''
+  indexData:'',
+  cateListData:''
 }

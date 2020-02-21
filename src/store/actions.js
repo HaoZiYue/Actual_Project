@@ -1,5 +1,5 @@
-import {getSearchItem,getScrollNav,getIndexDataList} from '../API/index';
-import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA} from './mutations-type';
+import {getSearchItem,getScrollNav,getIndexDataList,getCateListData} from '../API/index';
+import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA,SAVE_CATELIST} from './mutations-type';
 export default{
   async getSearchItems({commit}){
     let result = await getSearchItem();
@@ -15,5 +15,9 @@ export default{
   async getIndexData({commit}){
     let result = await getIndexDataList()
     commit(SAVE_INDEXDATA,result)
+  },
+  async getCategoryListData({commit}){
+    let result = await getCateListData();
+    commit(SAVE_CATELIST,result)
   }
 }
