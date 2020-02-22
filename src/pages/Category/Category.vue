@@ -2,7 +2,7 @@
   <div id="categoryContainer">
     <!-- 头部搜索 -->
     <div class="headerSearch">
-      <div class="inputContainer">
+      <div class="inputContainer" @click="$router.push('/search')">
         <span class="iconfont iconfangdajing"></span>
         <input type="text" placeholder="搜索商品，共20267款好物">
       </div>
@@ -36,6 +36,16 @@
     },
     mounted(){
       this.$store.dispatch('getCategoryListData');
+      let indexNum = JSON.parse(sessionStorage.getItem('index')) *1
+      window.addEventListener('unload',()=>{
+        sessionStorage.setItem('index',JSON.stringify(this.indexNum));
+      })
+      if(indexNum){
+          this.indexNum = indexNum
+        }else{
+          this.indexNum = 0
+        }
+      
       
     },
     computed:{
@@ -79,13 +89,20 @@
 
 <style scoped lang="stylus">
   #categoryContainer
-    display flex
-    flex-direction column
-    justify-content space-between
+    // display flex
+    // flex-direction column
+    // justify-content space-between
+    position relative
     .headerSearch
       height 88px
       padding 0 30px
+      width 100%
+      box-sizing border-box
+      z-index 10
       background #fff
+      position absolute
+      top 0
+      left 0
       .inputContainer
         height 56px
         background #EDEDED
@@ -109,6 +126,7 @@
       height 1148px
       // background #fff
       display flex
+      padding-top 88px
       justify-content space-between
       .cateListLeft
         width 162px

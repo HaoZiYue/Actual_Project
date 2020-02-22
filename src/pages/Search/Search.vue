@@ -5,7 +5,7 @@
           <span class="iconfont iconfangdajing"></span>
           <input type="text" :placeholder="searchList.defaultKeyword.keyword">
         </div>
-        <div class="cancel" @click="$router.replace('/miste')">取消</div>
+        <div class="cancel" @click="$router.back()">取消</div>
       </div>
       <div class="hotSearch">
         <div class="hotSearchTitle">热门搜索</div>

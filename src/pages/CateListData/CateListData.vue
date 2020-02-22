@@ -1,22 +1,38 @@
 <template>
-  <div id="CateListDataContainer">
-    <div class="header-img">
-      <img :src="imgUrl" alt="">
-    </div>
-    <div class="imgListContainer" v-if="cateRightList">
-      <ul class="imgUl">
-        <li class="imgList" v-for="(item, index) in cateRightData.categoryList" :key="index">
-          <div class="img">
-            <img :src="item.bannerUrl" alt="">
+  <div id="BScrollContainer">
+    <div class="CateListDataContainer">
+      <div class="header-img">
+        <img :src="imgUrl" alt="">
+      </div>
+      <div class="imgListContainer" v-if="cateRightData">
+        <ul class="imgUl" v-show="cateRightData.categoryList">
+          <li class="imgList" v-for="(item, index) in cateRightData.categoryList" :key="index">
+            <div class="img">
+              <img :src="item.bannerUrl" alt="">
+            </div>
+            <span>{{item.name}}</span>
+          </li>
+        </ul>
+        <div class="cateList" v-show="cateRightData.subCateList" v-for="(rightList, index) in cateRightData.subCateList" :key="index">
+          <div class="title">{{rightList.title}}</div>
+          <div class="rightListContainer">
+              <ul class="right-list">
+                <li class="rightItem" v-for="(cate, index) in rightList.list" :key="index">
+                  <div class="listImg">
+                    <img :src="cate.wapBannerUrl" alt="">
+                  </div>
+                  <span class="span">{{cate.name}}</span>
+                </li>
+              </ul>
           </div>
-          <span>{{item.name}}</span>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import BScroll from 'better-scroll'
 import { mapState } from 'vuex'
   export default {
     data(){
@@ -26,18 +42,22 @@ import { mapState } from 'vuex'
       }
     },
     mounted(){
-      // console.log(this.$router)
       this.$store.dispatch('getCategoryRightListData')
-      // console.log(this.getListData())
       this.$nextTick(()=>{
           this.getListData()
           if(this.$route.query.imgUrl === undefined){
               this.imgUrl = "https://yanxuan.nosdn.127.net/868844d3288f130c1aa808312dbbd1d8.png"
             }
         })
+      window.addEventListener('load',()=>{
+        this.getListData()
+        let imgUrl = this.$route.query.imgUrl
+        this.imgUrl = imgUrl
+      })
       
       
     },
+    
     computed:{
       ...mapState({
         cateRightList:state=>state.cateRightList
@@ -53,7 +73,6 @@ import { mapState } from 'vuex'
             if(query === undefined){
               query = '11'
             }
-            
             return value.id.toString() === query
           })
         }
@@ -68,52 +87,99 @@ import { mapState } from 'vuex'
           let imgUrl = this.$route.query.imgUrl
           this.imgUrl = imgUrl
         })
+      },
+      cateRightList(){
+        this.$nextTick(() => {
+            this.scroll = new BScroll('#BScrollContainer', {
+              scrollY: true,
+              click:true
+            })
+          });
       }
     }
   }
 </script>
 
 <style scoped lang="stylus">
-#CateListDataContainer
+#BScrollContainer
   width 100%
   height 100%
-  padding 30px 30px 21px 30px
-  box-sizing border-box
-  .header-img
-    width 528px
-    height 192px
-    background #eee
-    margin-bottom 32px
-    img 
-      width 100%
-      height 100%
-  .imgListContainer
+  .CateListDataContainer
     width 100%
-    overflow hidden
-    .imgUl
-      width 552px
-      display flex
-      flex-wrap wrap
-      box-sizing border-box
-      // padding-right 10px
-      // justify-content space-between
-      .imgList
-        width 144px
-        height 216px
-        margin-right 34px
-        .img
+    // height 100%
+    padding 30px 30px 21px 30px
+    box-sizing border-box
+    .header-img
+      width 528px
+      height 192px
+      background #eee
+      margin-bottom 32px
+      img 
+        width 100%
+        height 100%
+    .imgListContainer
+      width 100%
+      overflow hidden
+      .imgUl
+        width 552px
+        display flex
+        flex-wrap wrap
+        box-sizing border-box
+        // padding-right 10px
+        // justify-content space-between
+        .imgList
           width 144px
-          height 144px
-          img
-            width 100%
-            height 100%
-        span
-          height 72px
-          display block
-          line-height 36px
-          font-size 24px
+          height 216px
+          margin-right 34px
+          .img
+            width 144px
+            height 144px
+            img
+              width 100%
+              height 100%
+          span
+            height 72px
+            display block
+            line-height 36px
+            font-size 24px
+            color #333
+            overflow hidden
+            text-align center
+      .cateList
+        width 100%
+        .title
+          width 100%
+          height 51px
+          padding-bottom 8px
+          margin-bottom 24px
+          box-sizing border-box
+          font-size 28px
           color #333
+          // background yellow
+          font-weight bold
+          border-bottom 1px solid #eee
+          line-height 43px
+        .rightListContainer
+          width 100%
           overflow hidden
-          text-align center
+          .right-list
+            width 552px
+            display flex
+            flex-wrap wrap
+            .rightItem
+              width 144px
+              height 216px
+              margin-right 34px
+              .listImg
+                width 144px
+                height 144px
+                img 
+                  width 100%
+                  height 100%
+              .span
+                display block
+                height 72px
+                text-align center
+                margin-top 10px
 
 </style>
