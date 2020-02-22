@@ -12,8 +12,8 @@
       <!-- 左侧分类列表 -->
       <div class="cateListLeft" v-if="cateListData.categoryL1List">
         <ul class="navList" ref="navList">
-          <li @click="isActive" :class="{active:indexNum === index,}" v-for="(item, index) in cateListData.categoryL1List" :key="index">
-            <router-link :to="`/category/cateList?cateListID=${item.id}`" class="li" :class="{activeFont:indexNum === index}">{{item.name}}</router-link>
+          <li @click="isActive" :class="{active:indexNum === index}" v-for="(item, index) in cateListData.categoryL1List" :key="index">
+            <router-link :to="`/category/cateList?cateListID=${item.id}&imgUrl=${item.bannerUrl}`" class="li" :class="{activeFont:indexNum === index}">{{item.name}}</router-link>
           </li>
         </ul>
       </div>
@@ -59,7 +59,7 @@
         for (let i = 0; i < tops.length; i++) {
           // const element = array[i];
           if(event.clientY >= tops[i] && event.clientY <= tops[i+1]){
-            console.log(i)
+            // console.log(i)
             this.indexNum = i;
             break
           }

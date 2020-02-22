@@ -1,5 +1,5 @@
-import {getSearchItem,getScrollNav,getIndexDataList,getCateListData} from '../API/index';
-import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA,SAVE_CATELIST} from './mutations-type';
+import {getSearchItem,getScrollNav,getIndexDataList,getCateListData,getCateRinghtListData} from '../API/index';
+import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA,SAVE_CATELIST,SAVE_CATERIGHTLIST} from './mutations-type';
 export default{
   async getSearchItems({commit}){
     let result = await getSearchItem();
@@ -19,5 +19,9 @@ export default{
   async getCategoryListData({commit}){
     let result = await getCateListData();
     commit(SAVE_CATELIST,result)
-  }
+  },
+  async getCategoryRightListData({commit}){
+    let result = await getCateRinghtListData();
+    commit(SAVE_CATERIGHTLIST,result)
+  } 
 }

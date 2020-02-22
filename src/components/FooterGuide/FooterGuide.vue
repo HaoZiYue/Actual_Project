@@ -5,8 +5,8 @@
       <p class="text" :class="{activeText:$route.path === '/miste/recommend'}" >首页</p>
     </div>
     <div class="footerItem" @click="goPath('/category')" >
-      <span class="iconfont iconfenlei2 icon" :class="{active:$route.path === '/category'}"></span>
-      <p class="text" :class="{activeText:$route.path === '/category'}">分类</p>
+      <span class="iconfont iconfenlei2 icon" :class="{active:$route.path === '/category/cateList'}"></span>
+      <p class="text" :class="{activeText:$route.path === '/category/cateList'}">分类</p>
     </div>
     <div class="footerItem" @click="goPath('/worthy')">
       <span class="iconfont iconzhidemai2 icon" :class="{active:$route.path === '/worthy'}"></span>

@@ -29,11 +29,13 @@ export default [
         path:'cateList',
         component: CateListData,
       },
-      // {
-      //   path:'/category/cateList',
-      //   redirect:''
-      // }
-    ]
+      {
+        path:'/category/cateList',
+        redirect:'/category/cateList?cateListID=11',
+        props:(route)=>({cateListID:route.query.cateListID})
+      }
+    ],
+    redirect:'/category/cateList'
   },
   {
     path:'/personal',
