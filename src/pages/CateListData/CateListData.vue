@@ -43,24 +43,30 @@ import { mapState } from 'vuex'
     },
     mounted(){
       this.$store.dispatch('getCategoryRightListData')
-      this.$nextTick(()=>{
-          this.getListData()
-          if(this.$route.query.imgUrl === undefined){
-              this.imgUrl = "https://yanxuan.nosdn.127.net/868844d3288f130c1aa808312dbbd1d8.png"
-            }
-        })
-      window.addEventListener('load',()=>{
+      // window.addEventListener('load',()=>{
         this.getListData()
         let imgUrl = this.$route.query.imgUrl
         this.imgUrl = imgUrl
-      })
+      // })
+      
+      this.$nextTick(()=>{
+          this.getListData()
+          // 默认显示第一图片
+          if(this.$route.query.imgUrl === undefined){
+           let defaultData = this.categoryL1List.find((value,index)=>{
+            return value.id === this.cateRightList[0].id
+           })
+           this.imgUrl = defaultData.bannerUrl
+            }
+        })
       
       
     },
     
     computed:{
       ...mapState({
-        cateRightList:state=>state.cateRightList
+        cateRightList:state=>state.cateRightList,
+        categoryL1List:state=>state.cateListData.categoryL1List
       })
     },
     methods:{
@@ -71,7 +77,7 @@ import { mapState } from 'vuex'
         if(this.cateRightList){
           cateRightData = this.cateRightList.find((value,index)=>{
             if(query === undefined){
-              query = '11'
+              query = this.cateRightList[0].id.toString()
             }
             return value.id.toString() === query
           })
@@ -104,6 +110,7 @@ import { mapState } from 'vuex'
 #BScrollContainer
   width 100%
   height 100%
+  overflow hidden
   .CateListDataContainer
     width 100%
     // height 100%

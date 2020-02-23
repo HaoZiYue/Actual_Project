@@ -35,16 +35,17 @@
       }
     },
     mounted(){
+      // this.indexNum = 0
       this.$store.dispatch('getCategoryListData');
-      let indexNum = JSON.parse(sessionStorage.getItem('index')) *1
-      window.addEventListener('unload',()=>{
-        sessionStorage.setItem('index',JSON.stringify(this.indexNum));
-      })
-      if(indexNum){
-          this.indexNum = indexNum
-        }else{
-          this.indexNum = 0
-        }
+      // let indexNum = JSON.parse(sessionStorage.getItem('index')) *1
+      // window.addEventListener('unload',()=>{
+      //   sessionStorage.setItem('index',JSON.stringify(this.indexNum));
+      // })
+      // if(indexNum){
+      //     this.indexNum = indexNum
+      //   }else{
+      //     this.indexNum = 0
+      //   }
       
       
     },
@@ -77,6 +78,9 @@
         }
       }
     },
+    // beforeDestroy(){
+      
+    // },
     watch:{
         cateListData(){
           this.$nextTick(()=>{
@@ -92,6 +96,7 @@
     // display flex
     // flex-direction column
     // justify-content space-between
+    height 100%
     position relative
     .headerSearch
       height 88px
