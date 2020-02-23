@@ -20,6 +20,12 @@ const postcss = px2rem({
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/wangyi':{
+        target:"https://m.you.163.com",
+        pathRewrite:{
+          '^/wangyi':''
+        }
       }
     }
   },

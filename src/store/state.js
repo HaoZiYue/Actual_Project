@@ -3,5 +3,6 @@ export default {
   scrollNav:'',
   indexData:'',
   cateListData:'',
-  cateRightList:''
+  cateRightList:'',
+  worthyNav:''
 }

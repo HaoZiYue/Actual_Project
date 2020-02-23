@@ -1,4 +1,4 @@
-import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA,SAVE_CATELIST,SAVE_CATERIGHTLIST} from './mutations-type'
+import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA,SAVE_CATELIST,SAVE_CATERIGHTLIST,SAVE_WORTHYNAV} from './mutations-type'
 export default{
   [SAVE_SEARCHITEMS](state,searchItem){
       state.searchList = searchItem
@@ -15,5 +15,8 @@ export default{
   },
   [SAVE_CATERIGHTLIST](state,cateRightList){
     state.cateRightList = cateRightList
+  },
+  [SAVE_WORTHYNAV](state,worthyNav){
+    state.worthyNav = worthyNav
   }
 }
