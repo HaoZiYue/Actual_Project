@@ -4,5 +4,7 @@ export default {
   indexData:'',
   cateListData:'',
   cateRightList:'',
-  worthyNav:''
+  worthyNav:'',
+  waterFall:'',
+  waterFallPageData:''
 }

@@ -35,18 +35,7 @@
       }
     },
     mounted(){
-      // this.indexNum = 0
       this.$store.dispatch('getCategoryListData');
-      // let indexNum = JSON.parse(sessionStorage.getItem('index')) *1
-      // window.addEventListener('unload',()=>{
-      //   sessionStorage.setItem('index',JSON.stringify(this.indexNum));
-      // })
-      // if(indexNum){
-      //     this.indexNum = indexNum
-      //   }else{
-      //     this.indexNum = 0
-      //   }
-      
       
     },
     computed:{
@@ -57,7 +46,17 @@
     methods:{
       _initTop(){
           let list = Array.from(this.$refs.navList.children)
+          let id = sessionStorage.getItem('id')*1;
           let top = []
+          if(this.cateListData){
+            if(id){
+              let num = this.cateListData.categoryL1List.findIndex((value,index) => {
+                return value.id === id
+              });
+              this.indexNum = num
+            }
+            // console.log(this.cateListData)
+          }
           for (let i = 0; i < list.length; i++) {
             top.push(list[i].offsetTop)
           }
@@ -68,9 +67,7 @@
         // console.log(event)
         let tops = this.tops;
         for (let i = 0; i < tops.length; i++) {
-          // const element = array[i];
           if(event.clientY >= tops[i] && event.clientY <= tops[i+1]){
-            // console.log(i)
             this.indexNum = i;
             break
           }
@@ -78,9 +75,6 @@
         }
       }
     },
-    // beforeDestroy(){
-      
-    // },
     watch:{
         cateListData(){
           this.$nextTick(()=>{

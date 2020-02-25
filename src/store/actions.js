@@ -1,5 +1,22 @@
-import {getSearchItem,getScrollNav,getIndexDataList,getCateListData,getCateRinghtListData,getWorthyNav} from '../API/index';
-import {SAVE_SEARCHITEMS,SAVE_SCROLLNAV,SAVE_INDEXDATA,SAVE_CATELIST,SAVE_CATERIGHTLIST,SAVE_WORTHYNAV} from './mutations-type';
+import {
+  getSearchItem,
+  getScrollNav,
+  getIndexDataList,
+  getCateListData,
+  getCateRinghtListData,
+  getWorthyNav,
+  getWaterFallData,
+  getPageWaterData} from '../API/index';
+import {
+  SAVE_SEARCHITEMS,
+  SAVE_SCROLLNAV,
+  SAVE_INDEXDATA,
+  SAVE_CATELIST,
+  SAVE_CATERIGHTLIST,
+  SAVE_WORTHYNAV,
+  SAVE_WATERFALLDATA,
+  SAVE_PAGEWATERFALLDATA
+} from './mutations-type';
 export default{
   async getSearchItems({commit}){
     let result = await getSearchItem();
@@ -27,6 +44,13 @@ export default{
   async getWorthNavData({commit}){
     let result = await getWorthyNav();
     !!(result.data.code === '200') && commit(SAVE_WORTHYNAV,result.data.data);
-    
+  },
+  async getWaterFallData({commit}){
+    let result = await getWaterFallData();
+    !!(result.data.code === '200') && commit(SAVE_WATERFALLDATA,result.data.data[0])
+  },
+  async getPagesData({commit,page,size}){
+    let result = await getPageWaterData(page,size);
+    !!(result.data.code === '200') && commit(SAVE_PAGEWATERFALLDATA,result.data.data.result)
   }
 }

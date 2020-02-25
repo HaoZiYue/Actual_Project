@@ -37,30 +37,29 @@ import { mapState } from 'vuex'
   export default {
     data(){
       return {
+        id:'',
         cateRightData:'',
         imgUrl:''
       }
     },
     mounted(){
       this.$store.dispatch('getCategoryRightListData')
-      // window.addEventListener('load',()=>{
-        this.getListData()
-        let imgUrl = this.$route.query.imgUrl
-        this.imgUrl = imgUrl
-      // })
+      window.addEventListener('unload',()=>{
+        sessionStorage.setItem('id',this.id)
+      })
       
       this.$nextTick(()=>{
           this.getListData()
           // 默认显示第一图片
-          if(this.$route.query.imgUrl === undefined){
-           let defaultData = this.categoryL1List.find((value,index)=>{
-            return value.id === this.cateRightList[0].id
-           })
-           this.imgUrl = defaultData.bannerUrl
-            }
+          if(this.categoryL1List){
+            if(this.$route.query.imgUrl === undefined){
+            let defaultData = this.categoryL1List.find((value,index)=>{
+              return value.id === this.cateRightList[0].id
+            })
+            this.imgUrl = defaultData.bannerUrl
+              }
+          }
         })
-      
-      
     },
     
     computed:{
@@ -79,6 +78,7 @@ import { mapState } from 'vuex'
             if(query === undefined){
               query = this.cateRightList[0].id.toString()
             }
+            this.id = query
             return value.id.toString() === query
           })
         }
@@ -96,10 +96,24 @@ import { mapState } from 'vuex'
       },
       cateRightList(){
         this.$nextTick(() => {
+            this.getListData();
             this.scroll = new BScroll('#BScrollContainer', {
               scrollY: true,
               click:true
             })
+            //显示第一张图片
+            let imgUrl = this.$route.query.imgUrl
+          
+            if(this.cateRightList){
+              if(imgUrl === undefined){
+              let defaultData = this.categoryL1List.find((value,index)=>{
+                return value.id === this.cateRightList[0].id
+              })
+              this.imgUrl = defaultData.bannerUrl
+                }else{
+                  this.imgUrl = imgUrl
+                }
+              }
           });
       }
     }
